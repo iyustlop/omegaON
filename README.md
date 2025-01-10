@@ -1,10 +1,6 @@
 # omegaON
 Project for OmegaON, resources and more
 
-# Persistance layer
+# Persistance layer.
 
-Data Base: Postgres
-files CSV
-
-# First task
-Create a docker container with a image of postgres.
+The command docker compose up start a postgres database. create_table.sql creates the schema and some data.
