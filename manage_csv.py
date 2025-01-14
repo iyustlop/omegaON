@@ -14,10 +14,11 @@ def open_csv(directorio, archivos):
   for archivo in archivos:
     nombre_archivo = "{}/{}".format(directorio, archivo)
     with open(nombre_archivo, 'r') as archivo:
-      datos.append(list(csv.reader(archivo)))
+      lector_csv = csv.DictReader(archivo)  # Utiliza DictReader para convertir filas en diccionarios
+      for fila in lector_csv:
+        datos.append(fila)
   
-  salida = flatten(datos)
-  return salida
+  return datos
 
 def listar_archivos(directorio, prefijo=None):
     """
