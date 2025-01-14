@@ -20,16 +20,16 @@ def connect_database():
 
     # Crear un cursor
     cursor = connection.cursor()
-    return cursor
+    return [connection, cursor]
   except Exception as e:
     print(f"Error al conectar o consultar la base de datos: {e}")
 
 
 def close_connection(cursor):
   if 'cursor' in locals():
-    cursor.close()
+    cursor[1].close()
   if 'connection' in locals():
-    connection.close()
+    cursor[0].close()
 
 
 def get_all_workers(cursor):
@@ -45,14 +45,17 @@ def get_all_workers(cursor):
   
   return rows
 
-def new_workers(cursor, rows):
+def new_workers(connection, cursor, dicts):
+
+  for my_dict in dicts:
+    print(my_dict)
+
       # Insertar un registro
     insert_query = """
         INSERT INTO workers (id, name, office, location, room, on_boarding, last_change)
         VALUES (%s, %s, %s, %s, %s, %s, %s);
     """
-    data_to_insert = ("001", "John Doe", "HQ", "New York", "A-101", "2025-01-10", "2025-01-11")
-    cursor.execute(insert_query, data_to_insert)
+    cursor.execute(insert_query, (my_dict["id"], my_dict["name"], my_dict["office"], my_dict["location"], my_dict["room"], my_dict["on_boarding"], my_dict["on_boarding"]))
 
     # Confirmar cambios
     connection.commit()
