@@ -6,7 +6,7 @@ from database import get_all_workers, connect_database, close_connection
 
 def main():
   cursor = connect_database()
-  rows = get_all_workers(cursor)
+  rows = get_all_workers(cursor[1])
   convertir_csv(rows)
   close_connection(cursor)
     
