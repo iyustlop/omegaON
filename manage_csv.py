@@ -14,10 +14,8 @@ def open_csv(directorio, archivos):
   for archivo in archivos:
     nombre_archivo = "{}/{}".format(directorio, archivo)
     with open(nombre_archivo, 'r') as archivo:
-      lector_csv = csv.DictReader(archivo)
-      for fila in lector_csv:
-        datos.append(fila)
-        
+      datos.append(list(csv.reader(archivo)))
+  
   salida = flatten(datos)
   return salida
 
