@@ -16,3 +16,23 @@ docker run -d \
 -p 5432:5432 \
 postgres
 ```
+
+## Database Initialization (for local, non-Docker deployments)
+
+To initialize or reset the database for local development (when not using Docker), you can use the `init_db.sh` script.
+
+**Prerequisites:**
+- Make sure you have the PostgreSQL client tools installed (specifically `psql`). If not, you'll need to install them for your operating system.
+- Ensure your PostgreSQL server is running and accessible with the credentials specified in `database.py` (host: `localhost`, user: `admin`, password: `admin`, database: `postgres`, port: `5432`).
+
+**Usage:**
+1. Open your terminal.
+2. Navigate to the root directory of this project.
+3. Make sure the script is executable: `chmod +x init_db.sh` (this only needs to be done once).
+4. Run the script:
+   ```bash
+   ./init_db.sh
+   ```
+This script will connect to the PostgreSQL database using the details found in `database.py` and execute the `sql/create_tables.sql` file to set up the necessary tables and initial data.
+
+**Note for Docker users:** If you are using Docker Compose (`docker-compose up`), the database is automatically initialized when the `postgres` service starts for the first time using the `sql/create_tables.sql` script. You do **not** need to run `init_db.sh` separately in that case. This script is intended for non-Dockerized local setups or for manually resetting the database if needed.
