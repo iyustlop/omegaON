@@ -1,0 +1,5 @@
+com/omega/on/producer/PageView.class
+com/omega/on/producer/RunnerConfiguration.class
+com/omega/on/producer/KafkaConfiguration.class
+com/omega/on/producer/RunnerConfiguration$1.class
+com/omega/on/producer/ProducerApplication.class
