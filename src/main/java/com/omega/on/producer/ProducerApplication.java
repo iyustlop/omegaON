@@ -5,6 +5,7 @@ import org.apache.kafka.clients.producer.ProducerConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -53,6 +54,10 @@ class RunnerConfiguration{
 		return new PageView(page, Math.random() > .5 ? 100 : 1000, name, source);
 	}
 
+	void stream(StreamBridge streamBridge){
+		streamBridge.send("pageViews-out-0",random("stream"));
+	}
+
 	void integration(MessageChannel channel){
 		var message = MessageBuilder
 				.withPayload(random("integration"))
@@ -62,10 +67,11 @@ class RunnerConfiguration{
 	}
 
 	@Bean
-	ApplicationListener <ApplicationReadyEvent> runnerListener (KafkaTemplate<Object,Object> template, MessageChannel channel){
+	ApplicationListener <ApplicationReadyEvent> runnerListener (StreamBridge streamBridge, KafkaTemplate<Object,Object> template, MessageChannel channel){
 		return event -> {
             //kafka(template);
-            integration(channel);
+            //integration(channel);
+			stream(streamBridge);
         };
 	}
 }
